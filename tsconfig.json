@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": "src",
+    "outDir": "dist",
+    "declaration": true,
+    "strict": true,
+    "esModuleInterop": false,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  /* only compile source files under src/      ↓↓↓↓↓↓ */
+  "include": ["src/**/*.ts"],
+
+  /* explicitly drop build output & packages   ↓↓↓↓↓↓ */
+  "exclude": ["dist", "node_modules", "jest.config.ts"]
+}
