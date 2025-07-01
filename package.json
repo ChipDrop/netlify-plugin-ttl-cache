@@ -1,6 +1,7 @@
 {
   "name": "@chipdrop/netlify-plugin-ttl-cache",
   "version": "1.0.0",
+  "type": "module",
   "publishConfig": {
     "access": "restricted"
   },
