@@ -42,8 +42,6 @@ beforeEach(() => {
   stat.mockResolvedValue({ mtime: new Date() });
 });
 
-/* … describe/it blocks exactly as before (vi.* API matches vi) … */
-
 describe('on onPreBuild', () => {
   const files = ['file-1.js', 'file-2.png', 'folder/file-1.png'];
   beforeEach(() => {
