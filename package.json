@@ -24,7 +24,6 @@
     "lint": "yarn typecheck && eslint . --ext .ts",
     "prepublishOnly": "yarn build && yarn lint && yarn test"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "@netlify/build": "^33.5.0",
     "@types/node": "^24.0.8",
