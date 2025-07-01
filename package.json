@@ -2,6 +2,7 @@
   "name": "@chipdrop/netlify-plugin-ttl-cache",
   "version": "1.0.0",
   "type": "module",
+  "private": true,
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
     "access": "restricted"
