@@ -45,21 +45,21 @@ export const onPreBuild: NetlifyPlugin['onPreBuild'] = async ({
 };
 
 /** Restore cached files along with latest build assets (without replacement). */
-export const onPostBuild: NetlifyPlugin['onPreBuild'] = async ({
+export const onPostBuild: NetlifyPlugin['onPostBuild'] = async ({
   utils,
   inputs,
 }) => {
   if (typeof inputs.path === 'string') {
-    try {
-      if (await stat(TMP_CACHE_DIR))
-        await utils.run('rsync', [
-          '-r',
-          '--ignore-existing',
-          addTrailingSlash(TMP_CACHE_DIR),
-          addTrailingSlash(inputs.path),
-        ]);
+    const hasTmpCache = await stat(TMP_CACHE_DIR).catch(() => false);
+    if (hasTmpCache) {
+      await utils.run('rsync', [
+        '-r',
+        '--ignore-existing',
+        addTrailingSlash(TMP_CACHE_DIR),
+        addTrailingSlash(inputs.path),
+      ]);
       await rm(TMP_CACHE_DIR, { recursive: true, force: true });
-    } catch {} // eslint-disable-line
+    }
 
     // Save new cache
     await utils.cache.save(inputs.path);

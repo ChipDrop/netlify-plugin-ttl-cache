@@ -15,5 +15,5 @@
   "include": ["src/**/*.ts"],
 
   /* explicitly drop build output & packages   ↓↓↓↓↓↓ */
-  "exclude": ["dist", "node_modules", "jest.config.ts"]
+  "exclude": ["dist", "node_modules"]
 }

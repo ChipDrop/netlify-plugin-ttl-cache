@@ -1,5 +1,9 @@
 import { vi, beforeEach, describe, it, expect } from 'vitest';
-import { type NetlifyPluginOptions, type OnPreBuild } from '@netlify/build';
+import {
+  type NetlifyPluginOptions,
+  type OnPostBuild,
+  type OnPreBuild,
+} from '@netlify/build';
 
 type JSONValue =
   | string
@@ -192,7 +196,7 @@ describe('on onPostBuild', () => {
         inputs,
         utils,
       } as unknown as NetlifyPluginOptions;
-      await (onPostBuild as OnPreBuild<Partial<Record<string, JSONValue>>>)(
+      await (onPostBuild as OnPostBuild<Partial<Record<string, JSONValue>>>)(
         options,
       );
       expect(utils.run).toHaveBeenCalledTimes(1);
@@ -209,7 +213,7 @@ describe('on onPostBuild', () => {
         inputs,
         utils,
       } as unknown as NetlifyPluginOptions;
-      await (onPostBuild as OnPreBuild<Partial<Record<string, JSONValue>>>)(
+      await (onPostBuild as OnPostBuild<Partial<Record<string, JSONValue>>>)(
         options,
       );
       expect(utils.cache.save).toHaveBeenCalledTimes(1);
@@ -221,7 +225,7 @@ describe('on onPostBuild', () => {
         inputs,
         utils,
       } as unknown as NetlifyPluginOptions;
-      await (onPostBuild as OnPreBuild<Partial<Record<string, JSONValue>>>)(
+      await (onPostBuild as OnPostBuild<Partial<Record<string, JSONValue>>>)(
         options,
       );
       expect(rm).toHaveBeenCalledTimes(1);

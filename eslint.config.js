@@ -1,6 +1,6 @@
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import vitestPlugin from 'eslint-plugin-vitest';
+import vitestPlugin from '@vitest/eslint-plugin';
 
 export default [
   { ignores: ['dist/**', 'node_modules/**'] },
@@ -19,6 +19,6 @@ export default [
   /* ✅  Vitest rules for test files */
   {
     files: ['**/*.test.ts'],
-    ...vitestPlugin.configs['flat/recommended'], // 👈 brings in env + rules
+    ...vitestPlugin.configs['flat/recommended'],
   },
 ];
