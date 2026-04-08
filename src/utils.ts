@@ -1,7 +1,5 @@
-import { join } from 'path';
-import { promises } from 'fs';
-
-const { readdir, stat } = promises;
+import { join } from 'node:path';
+import { readdir, stat } from 'node:fs/promises';
 
 /** Returns an array of file paths within the given directory */
 export const getDirFilenames = async (dir: string): Promise<string[]> => {
