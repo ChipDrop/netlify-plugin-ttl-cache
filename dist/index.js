@@ -3,8 +3,7 @@ import { stat as stat2, unlink, rm } from "fs/promises";
 
 // src/utils.ts
 import { join } from "path";
-import { promises } from "fs";
-var { readdir, stat } = promises;
+import { readdir, stat } from "fs/promises";
 var getDirFilenames = async (dir) => {
   const files = await readdir(dir);
   const results = await Promise.all(

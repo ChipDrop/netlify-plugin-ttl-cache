@@ -10,6 +10,16 @@ For sites where assets are unique across deployments, and dynamically loaded (e.
 
 This plugin prevents this problem by allowing users to include legacy assets across releases.
 
+## Setup
+
+After cloning, configure the git hooks path:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+This enables a pre-commit hook that rebuilds `dist/` automatically so it stays in sync with source.
+
 ## Usage
 
 Install the plugin as a git dependency

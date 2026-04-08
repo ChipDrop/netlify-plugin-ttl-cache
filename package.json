@@ -22,7 +22,7 @@
   },
   "scripts": {
     "test": "vitest run",
-    "build": "tsup src/index.ts --format esm --dts --out-dir dist",
+    "build": "rm -rf dist && tsup src/index.ts --format esm --dts --out-dir dist",
     "typeCheck": "tsc --noEmit -p .",
     "lint": "npm run typeCheck && eslint .",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",

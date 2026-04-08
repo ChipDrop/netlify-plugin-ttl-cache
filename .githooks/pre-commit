@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Rebuild dist and stage it so committed dist always matches source.
+npm run build
+git add dist/
