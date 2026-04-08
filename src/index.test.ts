@@ -28,9 +28,15 @@ vi.mock('./utils.js', async () => {
 });
 
 /* Import after mocks (TLA works natively) */
-const { stat, unlink, rm } = (await import('node:fs/promises')) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
-const { getDirFilenames } = (await import('./utils.js')) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
+const fsPromises = await import('node:fs/promises');
+const utilsModule = await import('./utils.js');
 const { onPreBuild, onPostBuild } = await import('./index.js');
+const stat = vi.mocked(fsPromises.stat);
+const unlink = vi.mocked(fsPromises.unlink);
+const rm = vi.mocked(fsPromises.rm);
+const getDirFilenames = vi.mocked(utilsModule.getDirFilenames);
+type StatResult = Awaited<ReturnType<typeof fsPromises.stat>>;
+const makeStatResult = (mtime: Date): StatResult => ({ mtime }) as StatResult;
 
 /* Shared fixtures */
 const inputs = { ttl: 10, path: 'some-path', exclude: 'a^' };
@@ -43,7 +49,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   utils.cache.restore.mockReturnValue(true);
   getDirFilenames.mockResolvedValue(['file-1.js', 'file-2.png']);
-  stat.mockResolvedValue({ mtime: new Date() });
+  stat.mockResolvedValue(makeStatResult(new Date()));
 });
 
 describe('on onPreBuild', () => {
@@ -51,7 +57,7 @@ describe('on onPreBuild', () => {
   beforeEach(() => {
     utils.cache.restore.mockReturnValue(true);
     getDirFilenames.mockImplementation(() => Promise.resolve(files));
-    stat.mockImplementation(() => Promise.resolve({ mtime: new Date() }));
+    stat.mockImplementation(() => Promise.resolve(makeStatResult(new Date())));
   });
 
   it('attempts to load cache', async () => {
@@ -117,10 +123,12 @@ describe('on onPreBuild', () => {
     const invalidFiles = [files[0]];
 
     beforeEach(() => {
-      stat.mockImplementation((arg: string) =>
-        Promise.resolve({
-          mtime: invalidFiles.includes(arg) ? new Date(0) : new Date(),
-        }),
+      stat.mockImplementation((arg) =>
+        Promise.resolve(
+          makeStatResult(
+            invalidFiles.includes(String(arg)) ? new Date(0) : new Date(),
+          ),
+        ),
       );
     });
 
@@ -141,12 +149,12 @@ describe('on onPreBuild', () => {
     const invalidFiles = [files[1], files[2]];
 
     beforeEach(() => {
-      stat.mockImplementation((arg: string) =>
-        Promise.resolve({
-          mtime: invalidFiles.includes(arg as string)
-            ? new Date(0)
-            : new Date(),
-        }),
+      stat.mockImplementation((arg) =>
+        Promise.resolve(
+          makeStatResult(
+            invalidFiles.includes(String(arg)) ? new Date(0) : new Date(),
+          ),
+        ),
       );
     });
 
@@ -188,7 +196,9 @@ describe('on onPostBuild', () => {
 
   describe('on cache directory', () => {
     beforeEach(() => {
-      stat.mockImplementation(() => Promise.resolve({}));
+      stat.mockImplementation(() =>
+        Promise.resolve(makeStatResult(new Date())),
+      );
     });
 
     it('files are synced with build dir', async () => {
