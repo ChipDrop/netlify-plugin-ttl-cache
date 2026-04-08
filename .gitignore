@@ -19,6 +19,7 @@ yarn-error.log*
 
 # tmp folder
 tmp/
+dist/
 
 # Netlify
 netlify-plugin-ttl-cache*.tgz

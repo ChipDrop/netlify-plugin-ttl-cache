@@ -10,25 +10,28 @@ For sites where assets are unique across deployments, and dynamically loaded (e.
 
 This plugin prevents this problem by allowing users to include legacy assets across releases.
 
-## Setup
+## Publishing
 
-After cloning, configure the git hooks path:
+`main` is source-only. Run the manual GitHub Actions workflow to build the package and force-update the `release` branch with the installable artifact.
 
-```sh
-git config core.hooksPath .githooks
-```
+To publish the `release` branch:
 
-This enables a pre-commit hook that rebuilds `dist/` automatically so it stays in sync with source.
+1. Push the workflow file to the default branch.
+2. Open the repository's `Actions` tab in GitHub.
+3. Select the `Publish release branch` workflow.
+4. Click `Run workflow`.
 
-`dist/` is tracked in git because the package is installed via git URL rather than a registry. Keeping built artifacts in the repo means consumers get pre-built output without a separate publish step.
+The workflow installs dependencies, runs lint/tests, builds `dist/`, and force-pushes the installable package files to the `release` branch.
 
 ## Usage
 
-Install the plugin as a git dependency
+Install the plugin from the `release` branch:
 
 ```sh
-npm i -D github:ChipDrop/netlify-plugin-ttl-cache
+npm i -D github:ChipDrop/netlify-plugin-ttl-cache#release
 ```
+
+For reproducible installs, prefer pinning a commit SHA instead of tracking the branch head.
 
 Add the plugin to your `netlify.toml`
 

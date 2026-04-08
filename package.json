@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "type": "module",
   "private": true,
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
-  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

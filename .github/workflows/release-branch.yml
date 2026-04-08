@@ -1,0 +1,48 @@
+name: Publish release branch
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish-release-branch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+      - name: Publish built package to release branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_BRANCH: release
+        run: |
+          set -euo pipefail
+
+          release_dir="$(mktemp -d)"
+
+          cp package.json "$release_dir/"
+          cp README.md "$release_dir/"
+          cp manifest.yml "$release_dir/"
+          cp -R dist "$release_dir/"
+
+          cd "$release_dir"
+          git init
+          git checkout -b "$RELEASE_BRANCH"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "chore: publish release branch from ${GITHUB_SHA}"
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push --force origin "$RELEASE_BRANCH"
