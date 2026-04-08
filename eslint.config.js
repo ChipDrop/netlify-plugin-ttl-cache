@@ -16,7 +16,7 @@ export default [
     },
   ),
 
-  /* ✅  Vitest rules for test files */
+  /* Vitest rules for test files */
   {
     files: ['**/*.test.ts'],
     ...vitestPlugin.configs['flat/recommended'],

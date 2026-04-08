@@ -11,9 +11,9 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  /* only compile source files under src/      ↓↓↓↓↓↓ */
+  /* only compile source files under src/ */
   "include": ["src/**/*.ts"],
 
-  /* explicitly drop build output & packages   ↓↓↓↓↓↓ */
+  /* explicitly drop build output & packages */
   "exclude": ["dist", "node_modules"]
 }
