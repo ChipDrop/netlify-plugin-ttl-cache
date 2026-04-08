@@ -21,7 +21,8 @@
     "build": "rm -rf dist && tsup src/index.ts --format esm --dts --out-dir dist",
     "typeCheck": "tsc --noEmit -p .",
     "lint": "npm run typeCheck && eslint .",
-    "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "format": "prettier --write \"**/*.{js,ts,md,json,yml}\" --ignore-path .gitignore",
+    "formatCheck": "prettier --check \"**/*.{js,ts,md,json,yml}\" --ignore-path .gitignore",
     "prepublishOnly": "npm run format && npm run build && npm run lint && npm test"
   },
   "devDependencies": {
