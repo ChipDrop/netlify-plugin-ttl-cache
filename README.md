@@ -20,6 +20,8 @@ git config core.hooksPath .githooks
 
 This enables a pre-commit hook that rebuilds `dist/` automatically so it stays in sync with source.
 
+`dist/` is tracked in git because the package is installed via git URL rather than a registry. Keeping built artifacts in the repo means consumers get pre-built output without a separate publish step.
+
 ## Usage
 
 Install the plugin as a git dependency
