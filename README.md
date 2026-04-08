@@ -12,17 +12,17 @@ This plugin prevents this problem by allowing users to include legacy assets acr
 
 ## Usage
 
-Install the plugin
+Install the plugin as a git dependency
 
 ```sh
-npm i -D netlify-plugin-ttl-cache
+npm i -D github:ChipDrop/netlify-plugin-ttl-cache
 ```
 
 Add the plugin to your `netlify.toml`
 
 ```toml
 [[plugins]]
-package = "netlify-plugin-ttl-cache"
+package = "@chipdrop/netlify-plugin-ttl-cache"
   [plugins.inputs]
   path = "build"
   ttl = 90
