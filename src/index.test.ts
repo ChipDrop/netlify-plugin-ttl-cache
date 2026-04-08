@@ -15,7 +15,7 @@ type JSONValue =
     }
   | JSONValue[];
 
-/* 1️⃣  Register mocks *first* */
+/* Register mocks first */
 vi.mock('node:fs/promises', () => ({
   stat: vi.fn(),
   unlink: vi.fn(),
@@ -27,12 +27,12 @@ vi.mock('./utils.js', async () => {
   return { ...actual, getDirFilenames: vi.fn() };
 });
 
-/* 2️⃣  Import after mocks (TLA works natively) */
+/* Import after mocks (TLA works natively) */
 const { stat, unlink, rm } = (await import('node:fs/promises')) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 const { getDirFilenames } = (await import('./utils.js')) as any; // eslint-disable-line @typescript-eslint/no-explicit-any
 const { onPreBuild, onPostBuild } = await import('./index.js');
 
-/* 3️⃣  Shared fixtures */
+/* Shared fixtures */
 const inputs = { ttl: 10, path: 'some-path', exclude: 'a^' };
 const utils = {
   cache: { restore: vi.fn(), save: vi.fn() },
