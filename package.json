@@ -1,34 +1,46 @@
 {
-  "name": "netlify-plugin-ttl-cache",
-  "version": "1.0.2",
-  "description": "A Netlify plugin for persisting immutable build assets across releases.",
-  "keywords": [
-    "netlify",
-    "netlify-plugin",
-    "cache",
-    "ttl"
-  ],
-  "author": "Andy Richardson (andyrichardson)",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/andyrichardson/netlify-plugin-ttl-cache.git"
-  },
-  "bugs": {
-    "url": "https://github.com/andyrichardson/netlify-plugin-ttl-cache/issues"
-  },
-  "homepage": "https://github.com/andyrichardson/netlify-plugin-ttl-cache#readme",
-  "main": "src/index.js",
+  "name": "@chipdrop/netlify-plugin-ttl-cache",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "src/index.js",
-    "src/utils.js",
+    "dist",
     "manifest.yml"
   ],
-  "sideEffects": "false",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
-    "test": "jest"
+    "test": "vitest run",
+    "build": "rm -rf dist && tsup src/index.ts --format esm --dts --out-dir dist",
+    "typeCheck": "tsc --noEmit -p .",
+    "lint": "npm run typeCheck && eslint .",
+    "format": "prettier --write \"**/*.{js,ts,md,json,yml}\" --ignore-path .gitignore",
+    "formatCheck": "prettier --check \"**/*.{js,ts,md,json,yml}\" --ignore-path .gitignore",
+    "prepublishOnly": "npm run format && npm run build && npm run lint && npm test"
   },
   "devDependencies": {
-    "jest": "^27.1.0"
-  }
+    "@eslint/js": "^10.0.1",
+    "@netlify/build": "^35.11.2",
+    "@types/node": "^25.5.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/eslint-plugin": "^1.6.12",
+    "eslint": "^10.0.3",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.35.1",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": "24.x",
+    "npm": ">= 11"
+  },
+  "license": "MIT"
 }
