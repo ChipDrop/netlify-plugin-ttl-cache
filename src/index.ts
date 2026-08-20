@@ -39,8 +39,9 @@ export const onPreBuild: NetlifyPlugin['onPreBuild'] = async ({
   );
 
   if (typeof inputs.path === 'string') {
-    // Move to temporary directory to be restored post-build
-    await utils.run('cp', ['-r', inputs.path, TMP_CACHE_DIR]);
+    // -p keeps each file's original mtime; without it every carried-forward
+    // file looks brand new, so the ttl check above never finds it expired.
+    await utils.run('cp', ['-r', '-p', inputs.path, TMP_CACHE_DIR]);
   }
 };
 
@@ -52,8 +53,11 @@ export const onPostBuild: NetlifyPlugin['onPostBuild'] = async ({
   if (typeof inputs.path === 'string') {
     const hasTmpCache = await stat(TMP_CACHE_DIR).catch(() => false);
     if (hasTmpCache) {
+      // -t keeps each file's original mtime through this merge too, for the
+      // same reason as the -p above on cp.
       await utils.run('rsync', [
         '-r',
+        '-t',
         '--ignore-existing',
         addTrailingSlash(TMP_CACHE_DIR),
         addTrailingSlash(inputs.path),
