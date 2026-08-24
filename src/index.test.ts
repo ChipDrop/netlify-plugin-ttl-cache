@@ -113,6 +113,7 @@ describe('on onPreBuild', () => {
       expect(utils.run).toHaveBeenCalledTimes(1);
       expect(utils.run).toHaveBeenCalledWith('cp', [
         '-r',
+        '-p',
         inputs.path,
         expect.any(String),
       ]);
@@ -212,6 +213,7 @@ describe('on onPostBuild', () => {
       expect(utils.run).toHaveBeenCalledTimes(1);
       expect(utils.run).toHaveBeenCalledWith('rsync', [
         '-r',
+        '-t',
         '--ignore-existing',
         expect.any(String),
         `${inputs.path}/`,
