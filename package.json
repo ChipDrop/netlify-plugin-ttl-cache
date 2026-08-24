@@ -1,0 +1,46 @@
+{
+  "name": "@chipdrop/netlify-plugin-ttl-cache",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "manifest.yml"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "test": "vitest run",
+    "build": "rm -rf dist && tsup src/index.ts --format esm --dts --out-dir dist",
+    "typeCheck": "tsc --noEmit -p .",
+    "lint": "npm run typeCheck && eslint .",
+    "format": "prettier --write \"**/*.{js,ts,md,json,yml}\" --ignore-path .gitignore",
+    "formatCheck": "prettier --check \"**/*.{js,ts,md,json,yml}\" --ignore-path .gitignore",
+    "prepublishOnly": "npm run format && npm run build && npm run lint && npm test"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@netlify/build": "^35.11.2",
+    "@types/node": "^25.5.0",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/eslint-plugin": "^1.6.12",
+    "eslint": "^10.0.3",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.35.1",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": "24.x",
+    "npm": ">= 11"
+  },
+  "license": "MIT"
+}
