@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "@netlify/build": "^35.11.2",
+    "@netlify/build": "^35.13.8",
     "@types/node": "^25.5.0",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/eslint-plugin": "^1.6.12",
